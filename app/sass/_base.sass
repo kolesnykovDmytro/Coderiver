@@ -1,0 +1,228 @@
+a
+	color: inherit
+	text-decoration: none
+	display: block
+	cursor: pointer
+ul,p
+	margin: 0
+	padding: 0
+	list-style: none
+input
+	margin: 0
+
+input[type=checkbox]
+  display: none
+  + label:before
+    content: '✓'
+    margin-right: 30px
+    speak: none
+    display: flex
+    justify-content: center
+    color: #fff
+    width: 16px
+    text-align: center
+    height: 16px
+    text-align: center
+    border-radius: 10px
+    background: #000
+  &:checked + label:before
+    content: ''
+    animation-name: tick
+    animation-duration: 150ms
+    width: 16px
+    height: 16px
+
+@keyframes tick
+  0% 
+    +transform(scale(0))
+  90%
+    +transform(scale(1.2))
+  100%
+    +transform(scale(1))
+
+html, body
+	height: 100%
+	
+body
+	font-size: 16px
+	min-width: 320px
+	position: relative
+	line-height: 1.4
+	font-family: $default-font
+	overflow-x: hidden
+	margin: 0
+	color: $accent
+
+.img-responsive
+	display: block
+	max-width: 100%
+	height: auto
+
+.is-active
+	color: $black
+
+.wrap
+	max-width: 1245px
+	margin: 0 auto
+	padding: 0 1%
+
+.menu-navigation
+	display: none
+
+.menu-icon-toggle
+  display: block
+  width: 30px
+  height: 30px
+  position: relative
+  z-index: 99999
+  .home &
+    top: 50px
+    position: absolute
+    right: 20px
+    top: 20px
+  span
+    display: block
+    width: 100%
+    height: 2px
+    position: absolute
+    top: 50%
+    background-color: $white
+    transform: translate(0, -50%)
+    transition: opacity 0.3s 0.3s
+    .home:not(.open) &
+      background-color: $white
+    
+  &::before,
+  &::after
+    content: ''
+    display: block
+    width: 100%
+    height: 2px
+    position: absolute
+    background-color: $white
+    transition: transform 0.3s, top 0.3s 0.3s, bottom 0.3s 0.3s
+  
+  &::before 
+    top: 6px
+  
+  &::after 
+    bottom: 6px
+  
+  .open & 
+    span 
+      opacity: 0
+      transition: opacity 0.3s
+    
+    &::before,
+    &::after
+      background-color: $danube
+    
+    &::before
+      top: calc(50% - 1px)
+      transform: rotate(45deg)
+    
+    &::after 
+      bottom: calc(50% - 1px)
+      transform: rotate(-45deg)
+    
+    &::before,
+    &::after 
+      transition: top 0.3s, bottom 0.3s, transform 0.3s 0.3s
+    
+.menu-background
+  visibility: hidden
+  z-index: 999
+  width: 300%
+  height: 100vh
+  position: absolute
+  left: -130%
+  background-color: $white
+  transition: background-position 0.5s, transform 0.5s 0.5s, visibility 0.5s 1s
+  .open &
+    visibility: visible
+    transition: background-position 0.5s, transform 0.5s 0.5s
+  
+  &.top 
+    transform: rotate(-45deg) translateY(-150%)
+    background: linear-gradient(to top, $danube 50%, $white 50%)
+    background-size: 100% 200%
+    background-position: -100% 100%
+    .open & 
+      transform: rotate(-45deg) translateY(-49%)
+      background-position: 0 0
+    
+  &.middle 
+    transform: rotate(-45deg) translateY(50%) scaleY(0)
+    background: $white
+    .open & 
+      transform: rotate(-45deg) translateY(50%) scaleY(1)
+   
+  &.bottom
+    transform: rotate(-45deg) translateY(250%)
+    background: linear-gradient(to bottom, $white 50%, $danube 50%)
+    background-size: 100% 200%
+    background-position: 0 -100%
+    .open & 
+      transform: rotate(-45deg) translateY(149%)
+      background-position: 0 0
+.menu
+  @include center
+  visibility: hidden
+  list-style-type: none
+  margin: 0
+  padding: 0
+  z-index: 99999
+  .open & 
+    visibility: visible
+  li 
+    opacity: 0
+    margin-bottom: 5px
+    transform: translateX(20px)
+    transition: all 0.3s
+    $time-offset-close: 0
+    @for $i from 5 through 1
+      &:nth-child(#{$i})
+        $time-offset-close: $time-offset-close + 0.1;
+        transition-delay: #{$time-offset-close}s;
+        span
+          transition-delay: #{$time-offset-close}s
+        
+    .open &
+      opacity: 1
+      transform: translateX(0)
+      backface-visibility: hidden
+      $time-offset-open: 1
+      @for $i from 1 through 5
+        &:nth-child(#{$i})
+          $time-offset-open: $time-offset-open + 0.1
+          transition-delay: #{$time-offset-open}s
+          span 
+            transition-delay: #{$time-offset-open}s
+  a
+    position: relative
+    font-size: 24px
+    text-decoration: none
+    color: $danube
+    &::before 
+      content: ''
+      display: block
+      height: 2px
+      width: 0
+      position: absolute
+      left: -30px
+      top: 50%
+      background-color: $danube
+      transform: translateY(-50%)
+      transition: width 0.3s
+    &:hover 
+      &::before 
+        width: 15px
+.content 
+  @include center
+  width: 100%
+  text-align: center
+  color: $white
+  transition: all 0.3s 1s
+  .open &
+    opacity: 0
+    transition: all 0.3s
